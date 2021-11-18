@@ -15,7 +15,7 @@ namespace OneUseEchoServer
             //Creates a listener able to listen for connections incoming on port 7 only on the loopback adapter
             //loopback adapter is only used for connections on the local machine
             TcpListener listener = new TcpListener(IPAddress.Loopback, 7);
-            
+
             //Actually starts the listener
             listener.Start();
 
@@ -36,6 +36,9 @@ namespace OneUseEchoServer
             Console.WriteLine(message);
             //Here it writes the data back to the client and appends a line break (cr lf); notice the line part of WriteLine
             writer.WriteLine(message);
+            //Makes sure that the message isn't buffered somewhere, and actually send to the client
+            //Always remember to flush after you
+            writer.Flush();
 
             //Because it doesn't expect more messages from the client, it closes the socket/connection
             socket.Close();
